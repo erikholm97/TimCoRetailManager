@@ -18,6 +18,11 @@ namespace TRMDesktopUI
             Initialize();
         }
 
+        protected override void Configure()
+        {
+            _container.Instance(_container);
+        }
+
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
             DisplayRootViewFor<ShellViewModel>();
@@ -35,7 +40,8 @@ namespace TRMDesktopUI
 
         protected override void BuildUp(object instance)
         {
-            base.BuildUp(instance);
+            _container.BuildUp(instance);
         }
+
     }
 }
