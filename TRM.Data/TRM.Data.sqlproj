@@ -57,11 +57,19 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="dbo" />
-    <Folder Include="Views" />
-    <Folder Include="Stored Procedures" />
     <Folder Include="PublishLocations" />
+    <Folder Include="dbo\Stored Procedures" />
+    <Folder Include="dbo\Table" />
+    <Folder Include="dbo\Views" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="PublishLocations\TRM.Data.publish.xml" />
+    <Build Include="dbo\Table\Inventory.sql" />
+    <Build Include="dbo\Table\Product.sql" />
+    <Build Include="dbo\Table\Sale.sql" />
+    <Build Include="dbo\Table\SaleDetail.sql" />
+    <Build Include="dbo\Table\User.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="TRM.Data.refactorlog" />
   </ItemGroup>
 </Project>
