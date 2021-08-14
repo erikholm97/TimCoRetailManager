@@ -11,13 +11,21 @@ namespace TRMDesktopUI.ViewModels
         public string UserName
         {
             get { return _userName; }
-            set { _userName = value; }
+            set 
+            { 
+                _userName = value;
+                NotifyOfPropertyChange(() => UserName);
+            }
         }
 
         public string PassWord
         {
             get { return _password; }
-            set { _password = value; }
+            set 
+            { 
+                _password = value;
+                NotifyOfPropertyChange(() => PassWord);
+            }
         }
 
     }
