@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace TRMDataManager.Library
 {
-    public class SQLDataAccess
+    internal class SQLDataAccess
     {
         public string GetConnectionString(string name)
         {

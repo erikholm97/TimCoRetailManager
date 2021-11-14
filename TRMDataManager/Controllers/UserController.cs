@@ -1,19 +1,21 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Web.Http;
+using TRMDataManager.Library.Inretnal.DataAccess;
+using TRMDataManager.Library.Models;
 
 namespace TRMDataManager.Controllers
 {
     [Authorize]
-    [RoutePrefix("api/User")]
-    public class UserController : Controller
+    public class UserController : ApiController
     {                
-        public ActionResult GetById(int id)
+        public List<UserModel> GetById()
         {
-            UserD
-            return View();
+            string userId = RequestContext.Principal.Identity.GetUserId();
+
+            UserData data = new UserData();
+           
+            return data.GetUserById(userId);
         }
     }
 }
