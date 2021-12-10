@@ -6,5 +6,4 @@ begin
 	SELECT FirstName, LastName, EmailAddress
 	from [dbo].[User]
 	where Id = @Id;
-RETURN 0
 end;

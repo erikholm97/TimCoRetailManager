@@ -6,3 +6,4 @@
     [EmailAddress] NVARCHAR(256) NOT NULL, 
     [CreatedDate] DATETIME2 NOT NULL DEFAULT getutcdate()
 )
+--https://youtu.be/k6mbESq--eE?t=252

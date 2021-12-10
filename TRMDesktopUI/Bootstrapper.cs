@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using TRMDesktopUI.Helpers;
+using TRMDesktopUI.Library.Api;
 using TRMDesktopUI.ViewModels;
 
 namespace TRMDesktopUI
@@ -40,6 +41,7 @@ namespace TRMDesktopUI
                .ToList()
                .ForEach(viewModelType => _container.RegisterPerRequest(
                    viewModelType, viewModelType.ToString(), viewModelType));
+        https://youtu.be/p6zMfK_B7a4?t=1361
 
         }
 
