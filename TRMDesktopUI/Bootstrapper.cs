@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using TRMDesktopUI.Helpers;
 using TRMDesktopUI.Library.Api;
+using TRMDesktopUI.Library.Models;
 using TRMDesktopUI.ViewModels;
 
 namespace TRMDesktopUI
@@ -33,6 +34,7 @@ namespace TRMDesktopUI
             _container
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
+                .Singleton<ILoggedInUserModel, LoggedInUserModel>()
                 .Singleton<IAPIHelper, APIHelper>();
 
             GetType().Assembly.GetTypes()
@@ -41,8 +43,6 @@ namespace TRMDesktopUI
                .ToList()
                .ForEach(viewModelType => _container.RegisterPerRequest(
                    viewModelType, viewModelType.ToString(), viewModelType));
-        https://youtu.be/p6zMfK_B7a4?t=1361
-
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)

@@ -12,7 +12,7 @@ namespace TRMDataManager.Library.Inretnal.DataAccess
         public List<UserModel> GetUserById(string Id)
         {
             SQLDataAccess sqlAccess = new SQLDataAccess();
-
+            //https://youtu.be/p6zMfK_B7a4?t=2716
             var p = new { Id = Id };
 
             var output = sqlAccess.LoadData<UserModel, dynamic>("dbo.spUserLookup", p, "TRM.Data");

@@ -4,18 +4,22 @@ using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using TRMDesktopUI.Models;
+using TRMDesktopUI.Library.Models;
 
 
 namespace TRMDesktopUI.Library.Api
 {
     public class APIHelper : IAPIHelper
     {
-        public HttpClient apiClient { get; set; }
+        private HttpClient apiClient;
+        //https://youtu.be/p6zMfK_B7a4?t=2402
 
-        public APIHelper()
+        private ILoggedInUserModel _loggedInUser;
+
+        public APIHelper(ILoggedInUserModel loggedInUser)
         {
             InitialiazeClient();
+            _loggedInUser = loggedInUser;
         }
 
         private void InitialiazeClient()
@@ -37,17 +41,47 @@ namespace TRMDesktopUI.Library.Api
                 new KeyValuePair<string, string>("password", password),
             });
 
-            using (HttpResponseMessage response = await apiClient.PostAsync("/Token", data))
+            using (HttpResponseMessage response = await apiClient.PostAsync("/token", data))
             {
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsAsync<AuthenticatedUser>();
+                    
                     return result;
                 }
                 else
                 {
                     throw new Exception(response.ReasonPhrase);
                 }
+            }
+        }
+
+        public async Task<LoggedInUserModel> GetLoggedInUserInfo(string token)
+        {
+            apiClient.DefaultRequestHeaders.Clear();
+            apiClient.DefaultRequestHeaders.Accept.Clear();
+            apiClient.DefaultRequestHeaders.Accept.Clear();
+            apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            apiClient.DefaultRequestHeaders.Add("Authorization", $"Bearer { token }");
+            //https://youtu.be/p6zMfK_B7a4?t=1503
+
+            using(HttpResponseMessage response = await apiClient.GetAsync("/api/User"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<LoggedInUserModel>();
+                    _loggedInUser.CreatedDate = result.CreatedDate;
+                    _loggedInUser.EmailAddress = result.EmailAddress;
+                    _loggedInUser.FirstName = result.FirstName;
+                    _loggedInUser.LastName = result.LastName;
+                    _loggedInUser.Token = token;
+
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }                                
             }
         }
     }
