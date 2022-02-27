@@ -8,5 +8,6 @@ namespace TRMDesktopUI.Library.Api
     {
         Task<AuthenticatedUser> Authenticate(string username, string password);
         Task<LoggedInUserModel> GetLoggedInUserInfo(string token);
+        HttpClient ApiClient { get; }
     }
 }
