@@ -43,6 +43,20 @@ namespace TRMDesktopUI.ViewModels
             }
         }
 
+        private ProductModel _selectedProduct;
+
+        public ProductModel SelectedProduct
+        {
+            get { return _selectedProduct; }
+            set 
+            {
+                _selectedProduct = value;
+                NotifyOfPropertyChange(() => _selectedProduct);
+                NotifyOfPropertyChange(() => CanAddToCart);
+            }
+        }
+
+
         public BindingList<string> _cart;
 
         public BindingList<string> Cart
@@ -64,6 +78,7 @@ namespace TRMDesktopUI.ViewModels
             {
                 _itemQuantity = value;
                 NotifyOfPropertyChange(() => ItemQuantity);
+                NotifyOfPropertyChange(() => CanAddToCart);
             }
         }
 
@@ -101,8 +116,11 @@ namespace TRMDesktopUI.ViewModels
                 bool output = false;
 
                 //Make sure something is selected
-
                 //Make sure there is an item quantity
+                if (SelectedProduct?.QuantityInStock >= ItemQuantity)
+                {
+                    output = true;
+                }
 
                 return output;
             }
