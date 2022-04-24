@@ -57,9 +57,9 @@ namespace TRMDesktopUI.ViewModels
         }
 
 
-        public BindingList<string> _cart;
+        public BindingList<CartItemModel> _cart = new BindingList<CartItemModel>();
 
-        public BindingList<string> Cart
+        public BindingList<CartItemModel> Cart
         {
             get { return _cart; }
             set
@@ -115,9 +115,7 @@ namespace TRMDesktopUI.ViewModels
             {
                 bool output = false;
 
-                //Make sure something is selected
-                //Make sure there is an item quantity
-                if (SelectedProduct?.QuantityInStock >= ItemQuantity)
+                if (ItemQuantity > 0 && SelectedProduct?.QuantityInStock >= ItemQuantity)
                 {
                     output = true;
                 }
@@ -128,7 +126,13 @@ namespace TRMDesktopUI.ViewModels
 
         public void AddToCart()
         {
+            CartItemModel item = new CartItemModel()
+            {
+                Product = SelectedProduct,
+                QuantityInCart = ItemQuantity,
+            };
 
+            Cart.Add(item);
         }
 
         public bool CanRemoveFromCart
@@ -147,7 +151,6 @@ namespace TRMDesktopUI.ViewModels
 
         public void RemoveFromCart()
         {
-
         }
 
         public bool CanCheckOut
@@ -164,7 +167,6 @@ namespace TRMDesktopUI.ViewModels
 
         public void CheckOut()
         {
-            //https://youtu.be/I0M2ne00s5A?t=3106
         }
     }
 }
