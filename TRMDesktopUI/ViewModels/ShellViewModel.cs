@@ -9,7 +9,7 @@ using TRMDesktopUI.EventModels;
 namespace TRMDesktopUI.ViewModels
 {
     public class ShellViewModel : Conductor<object>, IHandle<LogOnEvent>
-    {        
+    {
         private IEventAggregator _events;
         private SalesViewModel _salesVM;
         private SimpleContainer _container;
@@ -20,8 +20,9 @@ namespace TRMDesktopUI.ViewModels
             _salesVM = salesVM;
             _container = container;
 
-            _events.Subscribe(this);            
-            ActivateItem(_container.GetInstance<LoginViewModel>());
+            _events.Subscribe(this);
+
+            ActivateItem(IoC.Get<LoginViewModel>());
         }
 
         /// <summary>
@@ -29,7 +30,7 @@ namespace TRMDesktopUI.ViewModels
         /// </summary>                
         public void Handle(LogOnEvent message)
         {
-            ActivateItem(_salesVM);            
+            ActivateItem(_salesVM);
         }
     }
 }
