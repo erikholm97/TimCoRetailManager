@@ -72,7 +72,7 @@ namespace TRMDesktopUI.ViewModels
             }
         }
 
-        private int _itemQuantity = 1;
+        private int _itemQuantity;
 
         public int ItemQuantity
         {
