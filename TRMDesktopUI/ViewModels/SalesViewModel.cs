@@ -13,13 +13,15 @@ namespace TRMDesktopUI.ViewModels
 {
     public class SalesViewModel : Screen
     {
-        private IProductEndpoint _productEndpoint;
-        private IConfigHelper _configHelper;
+        IProductEndpoint _productEndpoint;
+        IConfigHelper _configHelper;
+        ISaleEndPoint _saleEndPoint;
 
-        public SalesViewModel(IProductEndpoint productEndpoint, IConfigHelper configHelper)
+        public SalesViewModel(IProductEndpoint productEndpoint, IConfigHelper configHelper, ISaleEndPoint saleEndPoint)
         {
             _productEndpoint = productEndpoint;
             _configHelper = configHelper;
+            _saleEndPoint = saleEndPoint;
         }
 
         protected override async void OnViewLoaded(object view)
@@ -110,8 +112,8 @@ namespace TRMDesktopUI.ViewModels
             decimal taxAmount = 0;
             decimal taxRate = _configHelper.GetTaxRate() / 100;
 
-            Cart.Where(x => x.Product.IsTaxable).Sum(x => x.Product.RetailPrice * x.QuantityInCart * taxRate);
-
+            taxAmount =  Cart.Where(x => x.Product.IsTaxable).Sum(x => x.Product.RetailPrice * x.QuantityInCart * taxRate);
+            
             return taxAmount;
         }
 
@@ -174,6 +176,7 @@ namespace TRMDesktopUI.ViewModels
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => Total);
+            NotifyOfPropertyChange(() => CanCheckOut);
         }
 
         public bool CanRemoveFromCart
@@ -195,6 +198,7 @@ namespace TRMDesktopUI.ViewModels
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => Total);
+            NotifyOfPropertyChange(() => CanCheckOut);
         }
 
         public bool CanCheckOut
@@ -203,14 +207,29 @@ namespace TRMDesktopUI.ViewModels
             {
                 bool output = false;
 
-                // Make sure something is in the cart.
+                if(Cart.Count > 0)
+                {
+                    output = true;
+                }
 
                 return output;
             }
         }
 
-        public void CheckOut()
+        public async Task CheckOut()
         {
+            SaleModel sale = new SaleModel();
+
+            foreach (var item in Cart)
+            {
+                sale.SaleDetails.Add(new SaleDetailModel
+                {
+                    ProductId = item.Product.Id,
+                    Quantity = item.QuantityInCart
+                });
+            }
+
+            await _saleEndPoint.PostSale(sale);
         }
     }
 }
