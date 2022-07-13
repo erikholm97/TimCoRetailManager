@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using TRMDataManager.Library.Models;
 
-namespace TRMDataManager.Models
+namespace TRMDataManager.Library.Models
 {
     public class SaleModel
     {
