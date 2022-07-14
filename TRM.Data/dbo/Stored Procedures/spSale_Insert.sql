@@ -7,10 +7,9 @@
 	@Total money
 AS
 begin
-	set nocount on
-
+	set nocount on;
 	insert into dbo.Sale(CashierId, SaleDate,SubTotal, Tax, Total)
-	values (@CashierId, @SaleDate,@SubTotal, @Tax, @Total)
+	values (@CashierId, @SaleDate,@SubTotal, @Tax, @Total);
 
 	select @Id = @@Identity;
 end

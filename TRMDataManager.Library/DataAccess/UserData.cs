@@ -14,7 +14,7 @@ namespace TRMDataManager.Library.Inretnal.DataAccess
             SQLDataAccess sqlAccess = new SQLDataAccess();
             var p = new { Id = Id };
 
-            var output = sqlAccess.LoadData<UserModel, dynamic>("dbo.spUserLookup", p, "TRM.Data");
+            var output = sqlAccess.LoadData<UserModel, dynamic>("dbo.spUserLookup", p, "TRMData");
 
             return output;
         }

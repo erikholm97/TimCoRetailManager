@@ -13,7 +13,7 @@ namespace TRMDataManager.Library.Internal.DataAccess
         {
             SQLDataAccess sqlAccess = new SQLDataAccess();
 
-            var output = sqlAccess.LoadData<ProductModel, dynamic>("dbo.spProduct_GetAll", new { }, "TRM.Data");
+            var output = sqlAccess.LoadData<ProductModel, dynamic>("dbo.spProduct_GetAll", new { }, "TRMData");
 
             return output;
         }
